@@ -46,13 +46,13 @@ body {
 }
 
 .flowerInfoDiv {
-  padding-top: 300px;
+  padding-top: 200px;
   margin: 5px;
 }
 
 .flowerImg {
-  width: 450px;
-  height: auto;
+  height: 450px;
+  width: auto;
 }
 
 #jarGIF{
