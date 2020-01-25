@@ -1,30 +1,61 @@
-img {
+
+body {
+  text-align: justify;
+  font-family: serif;
+}
+
+.webPage {
+  margin: 15px;
+} 
+
+#homeImg {
   width: 700px;
-  height: 500px;
+  height: auto;
 }
 
 #siteHeading {
-  color: orange;
-  font-size: 30px;
-  font-weight: 150;
-  border-bottom: black solid 2px;
-  padding-bottom: 10px;
+  border-bottom: black solid 1.5px;
+  padding-bottom: 15px;
   padding-top: 50px ;
   padding-right: 70px;
+  font-size: 30px;
+  font-weight: 150px;
+}
+
+#siteHeading >span {
+  color: orange; 
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
   text-align: right;
 }
 
 #linkToPageDiv {
   display: flex;
   flex-direction: column;
+  margin: auto;
 }
 
-#contentDiv {
+.contentDiv {
   margin-top: 20px;
   display: flex;
 }
 
+.flowerInfoDiv {
+  padding-top: 300px;
+  margin: 5px;
+}
+
+.flowerImg {
+  width: 450px;
+  height: auto;
+}
+
 #jarGIF{
   width: 100px;
-  height: 100px;
+  height: auto;
 }
