@@ -1,11 +1,6 @@
 const hideForOneSec = function () {
   const jar = document.getElementById('jarGIF');
-  const coverJar = document.getElementById('coverJar');
-  jar.style.display = 'none';
-  coverJar.style.display = 'block';
-  
-  setTimeout(() => {
-    jar.style.display = 'block';
-    coverJar.style.display = 'none';
-  }, 1000);
+  jar.style.visibility = 'hidden';
+
+  setTimeout(() => jar.style.visibility = 'visible', 1000);
 }
