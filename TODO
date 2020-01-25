@@ -14,9 +14,10 @@ TODO
 --DONE-- * Create folders and files for the website to begin.
             folders => public public/html public/css public/img
             files => public/html/index.html public/css/flowerCatalog.css      
-* Create the UI for home page.
+--DONE-- * Create the UI for home page.
     flowerCatalogServer.js
+--DONE-- * Create flower pages for Abeliophyllum & Ageratum.
+--DONE-- * Give links between pages.
+--DONE-- * Create UI for guest page.
 * Create a server for Flower Catalog website.
-* Create flower pages for Abeliophyllum & Ageratum.
-* Create UI for guest page.
-* Give links between pages.
+* Add lin to download PDF

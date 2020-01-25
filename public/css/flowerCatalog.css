@@ -59,3 +59,7 @@ body {
   width: 100px;
   height: auto;
 }
+
+#commendButton {
+  background-color: rgb(180, 174, 174);
+}
