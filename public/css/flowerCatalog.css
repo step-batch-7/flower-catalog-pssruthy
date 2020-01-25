@@ -1,0 +1,30 @@
+img {
+  width: 700px;
+  height: 500px;
+}
+
+#siteHeading {
+  color: orange;
+  font-size: 30px;
+  font-weight: 150;
+  border-bottom: black solid 2px;
+  padding-bottom: 10px;
+  padding-top: 50px ;
+  padding-right: 70px;
+  text-align: right;
+}
+
+#linkToPageDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+#contentDiv {
+  margin-top: 20px;
+  display: flex;
+}
+
+#jarGIF{
+  width: 100px;
+  height: 100px;
+}
