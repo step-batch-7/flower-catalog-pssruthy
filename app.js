@@ -1,6 +1,7 @@
-const {readFileSync, existsSync, statSync} = require('fs');
+const {readFileSync, existsSync, statSync, writeFileSync} = require('fs');
 const Response = require('./lib/response');
 const CONTENT_TYPES = require('./lib/mimeTypes');
+const {loadTemplate} = require('./lib/viewTemplates');
 
 const STATIC_DIR = `${__dirname}/public`;
 
@@ -24,9 +25,36 @@ const serveStaticFile = function(request){
   return response;
 };
 
+const updateCommend = function(req) {
+  const commentFilePath = `${__dirname}/commendInfo.json`;
+  const commentsInfo = JSON.parse(readFileSync(commentFilePath, 'utf8'));
+  const { usrName, comment} = req.body;
+  commentsInfo.unshift({usrName, comment});
+  const commentsInfoString = JSON.stringify(commentsInfo)
+  writeFileSync(commentFilePath, commentsInfoString);
+   req.url = '/guestBook.html';
+  return serveGuestPage(req)  
+}
+
+const serveGuestPage = function(req) {
+  const comments = JSON.parse(readFileSync('./commendInfo.json','utf8'));
+  const formattedComments = comments.reduce((formattedCom, comment)=>{
+    return `${formattedCom}\n ${comment.usrName} : ${comment.comment} </br>`;
+  },'');
+  const html = loadTemplate(req.url, {'comments' : formattedComments});
+  const response = new Response();
+  response.statusCode = 200;
+  response.setHeader('Content-Type', 'html');
+  response.setHeader('Content-Length', html.length);
+  response.body = html;
+  return response;
+}
+
 const findHandle = function(req){
-	if(req.method === 'GET' && req.url === '/') return serveHomePage;
-  if(req.method === 'GET') return serveStaticFile
+  if(req.method === 'GET' && req.url === '/') return serveHomePage;
+  if(req.method === 'GET' && req.url === '/guestBook.html') return serveGuestPage;
+  if(req.method === 'GET') return serveStaticFile;
+  if(req.method === 'POST' && req.url === '/updateCommend') return updateCommend;
 	return ()=> new Response();
 };
 
