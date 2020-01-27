@@ -4,6 +4,7 @@ const CONTENT_TYPES = require('./lib/mimeTypes');
 const {loadTemplate} = require('./lib/viewTemplates');
 
 const STATIC_DIR = `${__dirname}/public`;
+const STORAGE_FILE = `${__dirname}/commendInfo.json`;
 
 const serveHomePage = request => {
   request.url = '/index.html';
@@ -30,13 +31,17 @@ const generateCommitInfo = ({usrName, comment}) => {
   return {date, usrName, comment};
 }
 
+const loadComments = () => {
+  if(!existsSync(STORAGE_FILE)) return [];
+  return commentsInfo = JSON.parse(readFileSync(STORAGE_FILE, 'utf8'));
+}
+
 const updateCommend = function(req) {
-  const commentFilePath = `${__dirname}/commendInfo.json`;
-  const commentsInfo = JSON.parse(readFileSync(commentFilePath, 'utf8'));
+  const storedComments = loadComments();
   const newComment = generateCommitInfo(req.body);
-  commentsInfo.unshift(newComment);
-  const commentsInfoString = JSON.stringify(commentsInfo)
-  writeFileSync(commentFilePath, commentsInfoString);
+  storedComments.unshift(newComment);
+  const commentsInfoString = JSON.stringify(storedComments)
+  writeFileSync(STORAGE_FILE, commentsInfoString);
   req.url = '/guestBook.html';
   return serveGuestPage(req)  
 }
@@ -53,7 +58,7 @@ const formateComments = (comments) => {
   `${formattedCom}\n ${formateSingleComment(comment)} </br>`,'')};
 
 const serveGuestPage = function(req) {
-  const comments = JSON.parse(readFileSync('./commendInfo.json','utf8'));
+  const comments = loadComments();
   const formattedComments = formateComments(comments);
   const html = loadTemplate(req.url, {'comments' : formattedComments});
   
