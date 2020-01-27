@@ -50,7 +50,6 @@ const formateComments = (comments) => {
 const serveGuestPage = function(req) {
   const comments = JSON.parse(readFileSync('./commendInfo.json','utf8'));
   const formattedComments = formateComments(comments);
-  console.log(formattedComments);
   const html = loadTemplate(req.url, {'comments' : formattedComments});
   
   const response = new Response();
