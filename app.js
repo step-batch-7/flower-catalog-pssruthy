@@ -4,7 +4,7 @@ const CONTENT_TYPES = require('./lib/mimeTypes');
 const {loadTemplate} = require('./lib/viewTemplates');
 
 const STATIC_DIR = `${__dirname}/public`;
-const STORAGE_FILE = `${__dirname}/commendInfo.json`;
+const STORAGE_FILE = `${__dirname}/commentInfo.json`;
 
 const serveHomePage = request => {
   request.url = '/index.html';
@@ -43,7 +43,7 @@ const loadComments = () => {
   return JSON.parse(readFileSync(STORAGE_FILE, 'utf8'));
 }
 
-const updateCommend = function(req) {
+const updateComment = function(req) {
   const storedComments = loadComments();
   const newComment = generateCommitInfo(req.body);
   storedComments.unshift(newComment);
@@ -68,8 +68,7 @@ const formateComments = (comments) => {
 const serveGuestPage = function(req) {
   const comments = loadComments();
   const formattedComments = formateComments(comments);
-  const html = loadTemplate(req.url, {'comments' : formattedComments});
-  
+  const html = loadTemplate(req.url, {'comments' : formattedComments}); 
   return generateOkResponse(CONTENT_TYPES.html, html);
 }
 
@@ -77,7 +76,7 @@ const findHandle = function(req){
   if(req.method === 'GET' && req.url === '/') return serveHomePage;
   if(req.method === 'GET' && req.url === '/guestBook.html') return serveGuestPage;
   if(req.method === 'GET') return serveStaticFile;
-  if(req.method === 'POST' && req.url === '/guestBook.html') return updateCommend;
+  if(req.method === 'POST' && req.url === '/guestBook.html') return updateComment;
 	return ()=> new Response();
 };
 
