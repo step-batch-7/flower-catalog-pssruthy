@@ -37,7 +37,10 @@ const updateCommend = function(req) {
 }
 
 const formateSingleComment = function(comment){
-  return `${comment.usrName} : ${comment.comment} </br>`;
+  return `<div class="guestCommentBox">
+  <span class="cmdGuestName">${comment.usrName}</span><br>
+  <span>${comment.comment}</span>
+</div>`;
 };
 
 const formateComments = (comments) => {

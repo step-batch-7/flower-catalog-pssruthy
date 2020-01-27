@@ -67,3 +67,14 @@ body {
 #commendButton {
   background-color: rgb(180, 174, 174);
 }
+
+.guestCommentBox {
+  background-color: thistle;
+  border-radius: 4px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.cmdGuestName {
+font-weight: bold;
+}
