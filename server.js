@@ -4,7 +4,7 @@ const {processRequest} = require('./app');
 
 const handleRequestText = (text, socket) => {
   console.warn(`data: ${text}`);
-  const req = Request.parse(text); 
+	const req = Request.parse(text); 
   const response = processRequest(req);
 	response.write(socket);  
 };
