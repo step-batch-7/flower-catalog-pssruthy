@@ -27,8 +27,7 @@ const serveStaticFile = function(request){
 };
 
 const generateCommitInfo = ({usrName, comment}) => {
-  const date = new Date().toLocaleString();
-  return {date, usrName, comment};
+  return {date: new Date().toJSON(), usrName, comment};
 }
 
 const loadComments = () => {
@@ -47,8 +46,10 @@ const updateCommend = function(req) {
 }
 
 const formateSingleComment = function(comment){
+  const date = new Date(comment.date).toLocaleString();
+
   return `<div class="guestCommentBox">
-  <span class="cmdGuestName">${comment.usrName}</span> ${comment.date}<br>
+  <span class="cmdGuestName">${comment.usrName}</span> ${date}<br>
   <span>${comment.comment}</span>
 </div>`;
 };
