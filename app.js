@@ -11,10 +11,14 @@ const serveHomePage = request => {
   return serveStaticFile(request);
 }
 
+const isFileValid = (path) => {
+  const status = existsSync(path) && statSync(path);
+  return status || status.isFile;
+}
+
 const serveStaticFile = function(request){
-	const filePath = `${STATIC_DIR}${request.url}`
-  const status = existsSync(filePath) && statSync(filePath);
-  if(!status || !status.isFile) return new Response();
+  const filePath = `${STATIC_DIR}${request.url}`
+	if(!isFileValid(filePath)) return new Response();
   const [,extension] = request.url.match(/.*\.(.*)$/);
   const content = readFileSync(filePath);
   const contentType = CONTENT_TYPES[extension];
@@ -32,7 +36,7 @@ const generateCommitInfo = ({usrName, comment}) => {
 
 const loadComments = () => {
   if(!existsSync(STORAGE_FILE)) return [];
-  return commentsInfo = JSON.parse(readFileSync(STORAGE_FILE, 'utf8'));
+  return JSON.parse(readFileSync(STORAGE_FILE, 'utf8'));
 }
 
 const updateCommend = function(req) {
