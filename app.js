@@ -16,18 +16,22 @@ const isFileValid = (path) => {
   return status || status.isFile;
 }
 
+const generateOkResponse = function(contentType,content){
+  const response = new Response();
+  response.statusCode = 200;
+  response.setHeader('Content-Type', contentType);
+  response.setHeader('Content-Length', content.length);
+  response.body = content;
+  return response;
+}
+
 const serveStaticFile = function(request){
   const filePath = `${STATIC_DIR}${request.url}`
 	if(!isFileValid(filePath)) return new Response();
   const [,extension] = request.url.match(/.*\.(.*)$/);
   const content = readFileSync(filePath);
   const contentType = CONTENT_TYPES[extension];
-  const response = new Response();
-  response.setHeader('Content-Type', contentType);
-  response.setHeader('Content-Length', content.length);
-  response.body = content;
-  response.statusCode = 200;
-  return response;
+  return generateOkResponse(contentType,content);
 };
 
 const generateCommitInfo = ({usrName, comment}) => {
@@ -50,12 +54,11 @@ const updateCommend = function(req) {
 
 const formateSingleComment = function(comment){
   const date = new Date(comment.date);
-
   return `<div class="guestCommentBox">
-  <span class="cmtGuestName">${comment.usrName}</span>
-  <span class="cmtDate">${date.toLocaleString()}</span><br>
-  <span>${comment.comment}</span>
-</div>`;
+      <span class="cmtGuestName">${comment.usrName}</span>
+      <span class="cmtDate">${date.toLocaleString()}</span><br>
+      <span>${comment.comment}</span>
+    </div>`;
 };
 
 const formateComments = (comments) => {
@@ -67,12 +70,7 @@ const serveGuestPage = function(req) {
   const formattedComments = formateComments(comments);
   const html = loadTemplate(req.url, {'comments' : formattedComments});
   
-  const response = new Response();
-  response.statusCode = 200;
-  response.setHeader('Content-Type', 'html');
-  response.setHeader('Content-Length', html.length);
-  response.body = html;
-  return response;
+  return generateOkResponse(CONTENT_TYPES.html, html);
 }
 
 const findHandle = function(req){
