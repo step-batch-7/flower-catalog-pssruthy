@@ -26,7 +26,8 @@ const serveStaticFile = function(request){
 };
 
 const generateCommitInfo = ({usrName, comment}) => {
-  return {date : new Date(), usrName, comment};
+  const date = new Date().toLocaleString();
+  return {date, usrName, comment};
 }
 
 const updateCommend = function(req) {
