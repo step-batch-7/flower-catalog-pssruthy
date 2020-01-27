@@ -25,20 +25,24 @@ const serveStaticFile = function(request){
   return response;
 };
 
+const generateCommitInfo = ({usrName, comment}) => {
+  return {date : new Date(), usrName, comment};
+}
+
 const updateCommend = function(req) {
   const commentFilePath = `${__dirname}/commendInfo.json`;
   const commentsInfo = JSON.parse(readFileSync(commentFilePath, 'utf8'));
-  const { usrName, comment} = req.body;
-  commentsInfo.unshift({usrName, comment});
+  const newComment = generateCommitInfo(req.body);
+  commentsInfo.unshift(newComment);
   const commentsInfoString = JSON.stringify(commentsInfo)
   writeFileSync(commentFilePath, commentsInfoString);
-   req.url = '/guestBook.html';
+  req.url = '/guestBook.html';
   return serveGuestPage(req)  
 }
 
 const formateSingleComment = function(comment){
   return `<div class="guestCommentBox">
-  <span class="cmdGuestName">${comment.usrName}</span><br>
+  <span class="cmdGuestName">${comment.usrName}</span> ${comment.date}<br>
   <span>${comment.comment}</span>
 </div>`;
 };
