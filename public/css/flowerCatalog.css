@@ -64,7 +64,7 @@ body {
   height: auto;
 }
 
-#commendButton {
+#commentButton {
   background-color: rgb(180, 174, 174);
 }
 
@@ -75,6 +75,11 @@ body {
   width: fit-content;
 }
 
-.cmdGuestName {
+.cmtGuestName {
 font-weight: bold;
+}
+
+.cmtDate {
+  font-weight: lighter;
+  color: gray;
 }

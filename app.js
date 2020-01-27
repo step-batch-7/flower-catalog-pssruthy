@@ -46,10 +46,11 @@ const updateCommend = function(req) {
 }
 
 const formateSingleComment = function(comment){
-  const date = new Date(comment.date).toLocaleString();
+  const date = new Date(comment.date);
 
   return `<div class="guestCommentBox">
-  <span class="cmdGuestName">${comment.usrName}</span> ${date}<br>
+  <span class="cmtGuestName">${comment.usrName}</span>
+  <span class="cmtDate">${date.toLocaleString()}</span><br>
   <span>${comment.comment}</span>
 </div>`;
 };
@@ -75,7 +76,7 @@ const findHandle = function(req){
   if(req.method === 'GET' && req.url === '/') return serveHomePage;
   if(req.method === 'GET' && req.url === '/guestBook.html') return serveGuestPage;
   if(req.method === 'GET') return serveStaticFile;
-  if(req.method === 'POST' && req.url === '/updateCommend') return updateCommend;
+  if(req.method === 'POST' && req.url === '/updateComment') return updateCommend;
 	return ()=> new Response();
 };
 
