@@ -36,14 +36,20 @@ const updateCommend = function(req) {
   return serveGuestPage(req)  
 }
 
+const formateSingleComment = function(comment){
+  return `${comment.usrName} : ${comment.comment} </br>`;
+};
+
 const formateComments = (comments) => {
-  comments.reduce((formattedCom, comment)=> 
-  `${formattedCom}\n ${comment.usrName} : ${comment.comment} </br>`,'');}
+  return comments.reduce((formattedCom, comment)=> 
+  `${formattedCom}\n ${formateSingleComment(comment)} </br>`,'')};
 
 const serveGuestPage = function(req) {
   const comments = JSON.parse(readFileSync('./commendInfo.json','utf8'));
   const formattedComments = formateComments(comments);
+  console.log(formattedComments);
   const html = loadTemplate(req.url, {'comments' : formattedComments});
+  
   const response = new Response();
   response.statusCode = 200;
   response.setHeader('Content-Type', 'html');
