@@ -41,7 +41,6 @@ const updateCommend = function(req) {
   storedComments.unshift(newComment);
   const commentsInfoString = JSON.stringify(storedComments)
   writeFileSync(STORAGE_FILE, commentsInfoString);
-  req.url = '/guestBook.html';
   return serveGuestPage(req)  
 }
 
@@ -76,7 +75,7 @@ const findHandle = function(req){
   if(req.method === 'GET' && req.url === '/') return serveHomePage;
   if(req.method === 'GET' && req.url === '/guestBook.html') return serveGuestPage;
   if(req.method === 'GET') return serveStaticFile;
-  if(req.method === 'POST' && req.url === '/updateComment') return updateCommend;
+  if(req.method === 'POST' && req.url === '/guestBook.html') return updateCommend;
 	return ()=> new Response();
 };
 
