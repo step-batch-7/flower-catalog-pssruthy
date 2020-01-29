@@ -74,11 +74,13 @@ const updateComment = function (req, res) {
 
 const formateSingleComment = function (comment) {
   const date = new Date(comment.date);
-  return `<div class="guestCommentBox">
-      <span class="cmtGuestName">${comment.usrName}</span>
-      <span class="cmtDate">${date.toLocaleString()}</span><br>
-      <span>${comment.comment}</span>
-    </div>`;
+  let div = '';
+  div += `<div class="guestCommentBox">`;
+  div += `<span class="cmtGuestName">${comment.usrName}</span>`;
+  div += `<span class="cmtDate">${date.toLocaleString()}</span><br>`;
+  div += `<span>${comment.comment}</span>`;
+  div += `</div>`;
+  return div;
 };
 
 const formateComments = (comments) => {
