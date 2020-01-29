@@ -31,7 +31,7 @@ const serveStaticFile = function (request, response) {
   return generateOkResponse(contentType, content, response);
 };
 
-const generateCommitInfo = (body) => {
+const generateCommentInfo = (body) => {
   const { usrName, comment } = organizeQueryParams(body)
   return { date: new Date().toJSON(), usrName, comment };
 };
@@ -55,16 +55,19 @@ const pickupParams = (keyValuePairs, keyValue) => {
 
 const organizeQueryParams = (keyValuePairs) => keyValuePairs.split('&').reduce(pickupParams, {});
 
+const storeComment = (body) => {
+  const newComment = generateCommentInfo(body);
+  const storedComments = loadComments();
+  storedComments.unshift(newComment);
+  const commentsInfoString = JSON.stringify(storedComments)
+  writeFileSync(STORAGE_FILE, commentsInfoString);
+}
+
 const updateComment = function (req, res) {
   let body = '';
   req.on('data', data => body += data);
   req.on('end', () => {
-    req.query = organizeQueryParams(body);
-    const storedComments = loadComments();
-    const newComment = generateCommitInfo(body);
-    storedComments.unshift(newComment);
-    const commentsInfoString = JSON.stringify(storedComments)
-    writeFileSync(STORAGE_FILE, commentsInfoString);
+    storeComment(body);
     return serveGuestPage(req, res)
   });
 };
