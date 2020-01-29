@@ -10,25 +10,25 @@ const serveHomePage = (request, response) => {
   return serveStaticFile(request, response);
 };
 
-const isFileValid = (path) => {
+const isFileNotValid = (path) => {
   const status = existsSync(path) && statSync(path);
-  return status || status.isFile;
+  return !status || !status.isFile;
 };
 
 const generateOkResponse = function (contentType, content, response) {
   response.statusCode = 200;
   response.setHeader('Content-Type', contentType);
   response.setHeader('Content-Length', content.length);
-  return response.end(content);
+  response.end(content);
 };
 
 const serveStaticFile = function (request, response) {
   const filePath = `${STATIC_DIR}${request.url}`
-  if (!isFileValid(filePath)) return serveNotFoundResponse(request, response);
+  if (isFileNotValid(filePath)) return serveNotFoundResponse(request, response);
   const [, extension] = request.url.match(/.*\.(.*)$/);
   const content = readFileSync(filePath);
   const contentType = CONTENT_TYPES[extension];
-  return generateOkResponse(contentType, content, response);
+  generateOkResponse(contentType, content, response);
 };
 
 const generateCommentInfo = (body) => {
@@ -37,7 +37,7 @@ const generateCommentInfo = (body) => {
 };
 
 const loadComments = () => {
-  if (!existsSync(STORAGE_FILE)) return [];
+  if (isFileNotValid(STORAGE_FILE)) return [];
   return JSON.parse(readFileSync(STORAGE_FILE, 'utf8'));
 };
 
@@ -68,7 +68,7 @@ const updateComment = function (req, res) {
   req.on('data', data => body += data);
   req.on('end', () => {
     storeComment(body);
-    return serveGuestPage(req, res)
+    serveGuestPage(req, res)
   });
 };
 
@@ -90,27 +90,41 @@ const serveGuestPage = function (req, response) {
   const comments = loadComments();
   const formattedComments = formateComments(comments);
   const html = loadTemplate(req.url, { 'comments': formattedComments });
-  return generateOkResponse(CONTENT_TYPES.html, html, response);
+  generateOkResponse(CONTENT_TYPES.html, html, response);
 };
 
 const serveNotFoundResponse = (request, response) => {
   response.statusCode = 404;
   response.setHeader('Content-Length', 0);
-  return response.end();
-}
+  response.end();
+};
 
 const findHandle = function (req) {
-  if (req.method === 'GET' && req.url === '/') return serveHomePage;
-  if (req.method === 'GET' && req.url === '/guestBook.html') return serveGuestPage;
-  if (req.method === 'GET') return serveStaticFile;
-  if (req.method === 'POST' && req.url === '/guestBook.html') return updateComment;
-  return serveNotFoundResponse;
+  const postHandlers = {
+    '/guestBook.html': updateComment,
+    defaultHandler: serveStaticFile
+  };
+  const getHandlers = {
+    '/': serveHomePage,
+    '/guestBook.html': serveGuestPage,
+    '/index.html': serveHomePage,
+    defaultHandler: serveStaticFile
+  };
+  const methodHandlers = {
+    'POST': postHandlers,
+    'GET': getHandlers,
+    notFount: { defaultHandler: serveNotFoundResponse }
+  };
+
+  const handlers = methodHandlers[req.method] || methodHandlers.notFount;
+  const handler = handlers[req.url] || handlers.defaultHandler
+  return handler;
 };
 
 const processRequest = function (request, response) {
   console.warn(`Request: {method: ${request.method}, url :${request.url}}\n`);
   const handler = findHandle(request);
-  return handler(request, response);
+  handler(request, response);
 };
 
 module.exports = { processRequest };
