@@ -26,3 +26,5 @@ TODO
 --DONE-- * Add feature to view and submit comments
 
 --DONE-- * Add time for commits
+
+--DONE-- * Changed net module to http module

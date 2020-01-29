@@ -1,5 +1,5 @@
 const http = require('http');
-const { methodHandlers } = require('./app');
+const { methodHandlers } = require('./lib/handlers');
 
 const matchedHandlers = function (request, router) {
 	return request.url.match(router.path);
