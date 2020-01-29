@@ -101,32 +101,20 @@ const serveNotFoundResponse = (request, response) => {
   response.end();
 };
 
-const findHandle = function (req) {
-  const postHandlers = {
-    '/guestBook.html': updateComment,
-    defaultHandler: serveStaticFile
-  };
-  const getHandlers = {
-    '/': serveHomePage,
-    '/guestBook.html': serveGuestPage,
-    '/index.html': serveHomePage,
-    defaultHandler: serveStaticFile
-  };
-  const methodHandlers = {
-    'POST': postHandlers,
-    'GET': getHandlers,
-    notFount: { defaultHandler: serveNotFoundResponse }
-  };
+const postHandlers = [
+  { path: '/guestBook.html', handler: updateComment },
+  { path: '', handler: serveStaticFile }];
 
-  const handlers = methodHandlers[req.method] || methodHandlers.notFount;
-  const handler = handlers[req.url] || handlers.defaultHandler
-  return handler;
+const getHandlers = [
+  { path: '/index.html', handler: serveHomePage },
+  { path: '/guestBook.html', handler: serveGuestPage },
+  { path: '', handler: serveStaticFile }
+];
+
+const methodHandlers = {
+  'POST': postHandlers,
+  'GET': getHandlers,
+  notFount: { defaultHandler: serveNotFoundResponse }
 };
 
-const processRequest = function (request, response) {
-  console.warn(`Request: {method: ${request.method}, url :${request.url}}\n`);
-  const handler = findHandle(request);
-  handler(request, response);
-};
-
-module.exports = { processRequest };
+module.exports = { methodHandlers };
