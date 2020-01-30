@@ -28,3 +28,8 @@ TODO
 --DONE-- * Add time for commits
 
 --DONE-- * Changed net module to http module
+
+--DONE-- * Add a app class which deals with routing
+
+* Add npm package
+* Add eslint 

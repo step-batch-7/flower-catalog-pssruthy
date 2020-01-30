@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Guest Book</title>
-  <link rel="stylesheet" href="./css/flowerCatalog.css">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <title>Guest Book</title>
+    <link rel="stylesheet" href="./css/flowerCatalog.css">
+  </head>
 
-<body>
-  <div>
-    <div class="webPage">
-      <div id="siteHeading" class="center">
-        <a href="index.html">&lt;&lt; </a> <span>Guest Book</span>
+  <body>
+    <div>
+      <div class="webPage">
+        <div id="siteHeading" class="center">
+          <a href="index.html">&lt;&lt; </a> <span>Guest Book</span>
+        </div>
+        <div class="">
+          <h2>Leave a comment</h3>
+            <form action="guestBook.html" method="POST">
+              <table>
+                <tr>
+                  <td>Name :</td>
+                  <td><input type="text" size="27" name="usrName" class="inputBox"></td>
+                </tr>
+                <tr>
+                  <td>Comment :</td>
+                  <td><textarea name="comment" id="" cols="25" rows="7" class="inputBox"></textarea></td>
+                </tr>
+              </table>
+              <input type="submit" value="Submit" id="commentButton">
+            </form>
+        </div>
+        <hr>
+        <div>
+          <h3>See Comments below</h3> <br>
+          __comments__
+        </div>
+        <hr>
       </div>
-      <div class="">
-        <h2>Leave a comment</h3>
-          <form action="guestBook.html" method="POST">
-            <table>
-              <tr>
-                <td>Name :</td>
-                <td><input type="text" size="27" name="usrName" class="inputBox"></td>
-              </tr>
-              <tr>
-                <td>Comment :</td>
-                <td><textarea name="comment" id="" cols="25" rows="7" class="inputBox"></textarea></td>
-              </tr>
-            </table>
-            <input type="submit" value="Submit" id="commentButton">
-          </form>
-      </div>
-      <hr>
-      <div>
-        <h3>See Comments below</h3> <br>
-        __comments__
-      </div>
-      <hr>
-    </div>
-</body>
+  </body>
 
 </html>
