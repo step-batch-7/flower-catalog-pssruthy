@@ -1,0 +1,23 @@
+{
+  "name": "flower-catalog-pssruthy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/step-batch-7/flower-catalog-pssruthy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/step-batch-7/flower-catalog-pssruthy/issues"
+  },
+  "homepage": "https://github.com/step-batch-7/flower-catalog-pssruthy#readme"
+}
