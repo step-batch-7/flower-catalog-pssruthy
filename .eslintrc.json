@@ -2,7 +2,8 @@
     "env": {
         "commonjs": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "mocha": true
     },
     "extends": "eslint:recommended",
     "globals": {
@@ -100,8 +101,16 @@
                 "public/js/webLib.js"
             ],
             "rules": {
-                "no-unused-vars":"off",
-                "no-undef":"off"
+                "no-unused-vars": "off",
+                "no-undef": "off"
+            }
+        },
+        {
+            "files": [
+                "test/*Test.js"
+            ],
+            "rules": {
+                "no-magic-numbers": "off"
             }
         }
     ]

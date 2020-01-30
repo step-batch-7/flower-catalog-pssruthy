@@ -35,3 +35,8 @@ TODO
 --DONE-- * Add eslint 
 
 --DONE-- * Add redirection to guestBook.html after comment
+
+* Write test for app using supertest module
+  --DONE-- npm install mocha --save-dev
+  --DONE-- npm install supertest --save-dev
+  --DONE-- create test folder
