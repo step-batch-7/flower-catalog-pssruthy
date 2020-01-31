@@ -27,11 +27,21 @@ describe('GET', () => {
       .expect('Content-Length', '1522')
       .expect('Content-Type', 'text/html', done);
   });
+
+  it('Should give pdf file for url /pdf/Abeliophyllum.pdf', (done) => {
+    request(app.serve.bind(app))
+      .get('/pdf/Abeliophyllum.pdf')
+      .set('Accept', '*/*')
+      .expect(200)
+      .expect('Content-Type', 'application/pdf', done);
+  });
+
   it('Should give error 404 when the url /badFile is not exists ', (done) => { 
     request(app.serve.bind(app))
       .get('/badFile')
       .set('Accept', '*/*')
-      .expect(404, done);
+      .expect(404, done)
+      .expect('Oops!!!\nPage not fount');
   });
 });
 
