@@ -44,4 +44,6 @@ TODO
 --DONE-- * Add method not allowed function
 --DONE-- * Create a file to store status codes.
 * Move the commentInfo file in to a directory
-* Parse the body when it is reading.
+--DONE-- * Parse the body when it is reading.
+
+* Create the comment and comments class
