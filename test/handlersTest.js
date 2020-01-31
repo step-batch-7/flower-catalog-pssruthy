@@ -34,3 +34,12 @@ describe('GET', () => {
       .expect(404, done);
   });
 });
+
+describe('Method not allowed', () => {
+  it('Should give 405 method PUT which is not allowed', (done) => {
+    request(app.serve.bind(app))
+      .put('/saveComment.html')
+      .set('Accept', '*/*')
+      .expect(405, done);
+  });
+});

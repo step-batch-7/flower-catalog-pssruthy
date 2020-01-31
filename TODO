@@ -40,3 +40,5 @@ TODO
   --DONE-- npm install mocha --save-dev
   --DONE-- npm install supertest --save-dev
   --DONE-- create test folder
+
+--DONE-- * Add method not allowed function
