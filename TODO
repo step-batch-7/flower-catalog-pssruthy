@@ -46,4 +46,4 @@ TODO
 * Move the commentInfo file in to a directory
 --DONE-- * Parse the body when it is reading.
 
-* Create the comment and comments class
+--DONE-- * Create the comment and comments class

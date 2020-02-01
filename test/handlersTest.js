@@ -1,4 +1,6 @@
 const request = require('supertest');
+const fs = require('fs');
+const sinon = require('sinon');
 const {app} = require('./../lib/handlers');
 
 describe('GET', () => {
@@ -69,3 +71,23 @@ describe('Method not allowed', () => {
       .expect(405, done);
   });
 });
+
+describe('POST', () => {
+  before(() => {
+    sinon.replace(fs, 'writeFileSync', () => {});
+  });
+
+  it('Should give status code as 302 for redirection` ', (done) => {
+    request(app.serve.bind(app))
+      .post('/saveComment')
+      .set('Accept', '*/*')
+      .send('usrName=usr&comment=good')
+      .expect('Location', 'guestBook.html')
+      .expect(301, done);
+  });
+  afterEach(() => {
+    sinon.restore();
+  });
+  
+});
+
